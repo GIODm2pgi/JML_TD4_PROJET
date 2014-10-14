@@ -22,6 +22,12 @@ TestExplosivesJUnit4.class : Explosives.class TestExplosivesJUnit4.java
 TestExplosivesJUnit4.run : TestExplosivesJUnit4.class
 	 java -cp $(JMLJUNITCLASSPATH) TestExplosivesJUnit4
 
+TestExplosivesJUnit4Public.class : Explosives.class TestExplosivesJUnit4Public.java
+	$(JAVAC) -classpath $(JMLJUNITCLASSPATH)  TestExplosivesJUnit4Public.java
+
+TestExplosivesJUnit4Public.run : TestExplosivesJUnit4Public.class
+	 java -cp $(JMLJUNITCLASSPATH) TestExplosivesJUnit4Public
+
 eclipseBin :
 	cp *.class ../bin
 

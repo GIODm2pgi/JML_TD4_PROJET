@@ -27,15 +27,18 @@ public class Explosives {
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @         incomp[i][0].startsWith("Prod") && incomp[i][1].startsWith("Prod"));
       @*/
-	// Tous les produits doivent être référencés par "ProdXXXXXXX". Cela signifie que
-	// toutes les valeurs définies dans le tableau 'incomp' doivent commencer par "Prod".
+	// Tous les produits doivent être référencés par "ProdXXXXXXX" dans la liste des
+	// incompatibilités. Cela signifie que toutes les valeurs définies dans le tableau
+	// 'incomp' doivent commencer par "Prod".
 
 	/*@ public invariant // Prop 4
       @ (\forall int i; 0 <= i && i < nb_assign; 
       @         assign[i][0].startsWith("Bat") && assign[i][1].startsWith("Prod"));
       @*/
-	// Tous les bâtiment doivent être référencés par "BatXXXXXXX". Cela signifie que
-	// toutes les valeurs définies dans le tableau 'assign' doivent commencer par "Bat".
+	// Tous les bâtiments doivent être référencés par "BatXXXXXXX" et tous les produits
+	// doivent être référencés par "ProdXXXXXXX" dans la liste des affectations. Cela signifie
+	// que toutes les valeurs définies dans le tableau 'assign'[0] doivent commencer par "Bat"
+	// et toutes les valeurs définies dans le tableau 'assign'[1] doivent commencer par "Prod".
 
 	/*@ public invariant // Prop 5
       @ (\forall int i; 0 <= i && i < nb_inc; !(incomp[i][0]).equals(incomp[i][1]));

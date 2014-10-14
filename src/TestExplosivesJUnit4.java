@@ -39,26 +39,66 @@ public class TestExplosivesJUnit4 {
 		System.out.println("\n inconclusive tests: "+nb_inc+" -- failures : "+nb_fail );
 	}
 
-	/*@Test
-	public void  testSequence_0() {
+	@Test
+	public void  testFailInvariant1() {
+		try{
+			e=new Explosives();
+			for (int i=0;i<26;i++)
+				e.add_incomp("Prod_"+i,"Prod_"+i+"BIS");
+		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
+			handleJMLAssertionError(e);		
+		}  
+	}
+
+	@Test
+	public void  testFailInvariant2() {
+		try{
+			e=new Explosives();
+			for (int i=0;i<31;i++)
+				e.add_assign("Bat_"+i,"Prod_"+i);
+		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
+			handleJMLAssertionError(e);		
+		}  
+	}
+
+	@Test
+	public void  testFailInvariant3() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Coca-cola","Mentos");
+		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
+			handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testFailInvariant4() {
+		try{
+			e=new Explosives();
+			e.add_assign("Zoo","Prod_Chasseur");
+		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
+			handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testFailInvariant5() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Glycerine","Prod_Glycerine");
+		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
+			handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testFailInvariant7() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Prod_Nitro","Prod_Glycerine");
 			e.add_incomp("Prod_Dyna","Prod_Mite");
 			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign("Bat_1","Prod_Nitro");
-			e.add_assign("Bat_2","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Glycerine");
-		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
-			handleJMLAssertionError(e);		
-		}  
-	}*/
-
-	@Test
-	public void  testDoublon() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_A","Prod_A");
+			e.add_assign("Bat_1","Prod_Mite");
 		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
 			handleJMLAssertionError(e);		
 		}  
