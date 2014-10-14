@@ -40,10 +40,10 @@ public class TestExplosivesJUnit4 {
 	}
 
 	@Test
-	public void  testFailInvariant1() {
+	public void testFailInvariant1() {
 		try{
 			e=new Explosives();
-			for (int i=0;i<26;i++)
+			for (int i=0;i<25;i++)
 				e.add_incomp("Prod_"+i,"Prod_"+i+"BIS");
 		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
 			handleJMLAssertionError(e);		
@@ -51,7 +51,7 @@ public class TestExplosivesJUnit4 {
 	}
 
 	@Test
-	public void  testFailInvariant2() {
+	public void testFailInvariant2() {
 		try{
 			e=new Explosives();
 			for (int i=0;i<31;i++)
@@ -62,7 +62,7 @@ public class TestExplosivesJUnit4 {
 	}
 
 	@Test
-	public void  testFailInvariant3() {
+	public void testFailInvariant3() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Coca-cola","Mentos");
@@ -72,7 +72,7 @@ public class TestExplosivesJUnit4 {
 	}
 	
 	@Test
-	public void  testFailInvariant4() {
+	public void testFailInvariant4() {
 		try{
 			e=new Explosives();
 			e.add_assign("Zoo","Prod_Chasseur");
@@ -82,7 +82,7 @@ public class TestExplosivesJUnit4 {
 	}
 	
 	@Test
-	public void  testFailInvariant5() {
+	public void testFailInvariant5() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Prod_Glycerine","Prod_Glycerine");
@@ -92,7 +92,7 @@ public class TestExplosivesJUnit4 {
 	}
 	
 	@Test
-	public void  testFailInvariant7() {
+	public void testFailInvariant7() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Prod_Nitro","Prod_Glycerine");
@@ -103,4 +103,7 @@ public class TestExplosivesJUnit4 {
 			handleJMLAssertionError(e);		
 		}  
 	}
+	
+	@Test
+	public void 
 }

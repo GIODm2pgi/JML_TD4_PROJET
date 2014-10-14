@@ -40,7 +40,7 @@ public class TestExplosivesJUnit4Public {
 	}
 
 	@Test
-	public void  testFailInvariant6() {
+	public void testFailInvariant6() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Prod_Glycerine","Prod_Dynamite");
