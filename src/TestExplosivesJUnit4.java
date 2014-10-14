@@ -104,6 +104,15 @@ public class TestExplosivesJUnit4 {
 		}  
 	}
 	
+	/*@Test
+	public void testPreConditionsSupplementaires1(){
+		e=new Explosives();
+		e.add_incomp("Prod_Nitro","Prod_Glycerine");
+	}
+	
 	@Test
-	public void 
+	public void testPreConditionsSupplementaires2(){
+		e=new Explosives();
+		e.add_assign("Bat_1","Prod_Mite");
+	}*/
 }
