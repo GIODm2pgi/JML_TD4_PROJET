@@ -102,17 +102,5 @@ public class TestExplosivesJUnit4 {
 		} 	catch(org.jmlspecs.jmlrac.runtime.JMLAssertionError e){
 			handleJMLAssertionError(e);		
 		}  
-	}
-	
-	/*@Test
-	public void testPreConditionsSupplementaires1(){
-		e=new Explosives();
-		e.add_incomp("Prod_Nitro","Prod_Glycerine");
-	}
-	
-	@Test
-	public void testPreConditionsSupplementaires2(){
-		e=new Explosives();
-		e.add_assign("Bat_1","Prod_Mite");
-	}*/
+	}	
 }

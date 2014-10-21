@@ -1,3 +1,4 @@
+
 // Based on a B specification from Marie-Laure Potet.
 
 public class Explosives {
@@ -88,13 +89,100 @@ public class Explosives {
       @ (\forall int i; 0 <= i &&  i < nb_assign;
       @		(\forall int j; 0 <= j && j < nb_inc;
       @			( (assign[i][0].equals(bat) && incomp[j][0].equals(assign[i][1]) ) ==>
-      @				( !incomp[j][1].equals(prod) ) )))
+      @			( !incomp[j][1].equals(prod) )
+      @		)))
       @ ;
       @*/
 	public void add_assign(String bat, String prod){
 		assign[nb_assign][0] = bat;
 		assign[nb_assign][1] = prod;
 		nb_assign = nb_assign+1;
+	}
+
+	/*@ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod")) ;
+	  @ ensures (\result == true) ==>
+	  @ 		(\forall int i; 0 <= i && i < nb_inc;
+	  @				!(incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2)) ) ;
+	  @ ensures (\result == false) ==>
+	  @			(\exists int i; 0 <= i && i < nb_inc; 
+	  @				incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2) ) ;
+      @*/
+	public /*@ pure @*/ boolean compatible (String prod1, String prod2){
+		for (int i=0; i < nb_inc; i++)
+			if (incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2))
+				return false;	
+		return true;
+	}
+
+	/*@ requires (bat.startsWith("Bat")) ;
+	  @ requires (\exists int i; 0 <= i && i < nb_assign; assign[i][0].equals(bat)) ;
+	  @ ensures (\result == true) ==>
+	  @ 		((\forall int i; 0 <= i &&  i < nb_assign;
+      @				(\forall int j; 0 <= j && j < nb_assign;
+      @					(assign[i][0].equals(assign[j][0]) ==>
+      @					(i == j)))));
+	  @ ensures (\result == false) ==>
+	  @ (\exists int i,j;
+	  @		0 <= i && i < nb_assign && 0 <= j && j < nb_assign && i != j;
+	  @		assign[i][0].equals(assign[j][0])); 
+      @*/
+	// La méthode doit retourner 'true' que si le bâtiment 
+	// Si le résultat est 'false' : 
+	public /*@ pure @*/ boolean alone_in_bat (String bat){
+		int N = 0;
+		for (int i=0; i < nb_assign; i++)
+			if (assign[i][0].equals(bat))
+				N++;
+		return (N == 1);
+	}
+
+	// Solution trop simple : mettre chaque produit dans un bâtiment différent.
+	/*@ requires (prod.startsWith("Prod")) ;
+	  @ ensures (\result.startsWith("Bat")) ;
+	  @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
+      @				(\forall int j; 0 <= j && j < nb_inc;
+      @					( (assign[i][0].equals(assign[j][0]) ==>
+      @					(compatible(assign[i][1],assign[j][1])) 
+      @				)))) ;
+      @ ensures (alone_in_bat(\result)) ==>
+      @			(\forall int i; 0 <= i && i < nb_assign;
+      @				(compatible(assign[i][1],prod)) ==> (assign[i][0].equals(\result))); 
+      @*/
+	// Pour ne pas autoriser la solution simple, on vérifie que si le produit a été
+	// ajouté dans un bâtiment vide (nouveau bâtiment), alors le produit ne pouvait pas
+	// être placé dans un autre bâtiment pour cause d'incompatibilité.
+	public String findBat (String  prod){
+		// On stock dans un tableau la liste des produits pour chaque bâtiment.
+		String[][] liste_bat = new String[30][2];
+		int nb_bats = 0;
+
+		for (int i=0; i < nb_assign;i++){
+			boolean added = false;
+			for (int j=0; j < nb_bats; j++)
+				if (liste_bat[j][0].equals(assign[i][0])){
+					liste_bat[j][1] += "_" + assign[i][1];
+					added = true;
+				}
+			if (!added){
+				liste_bat[nb_bats][0] = assign[i][0];
+				liste_bat[nb_bats][1] = assign[i][1];
+				nb_bats++;
+			}				
+		}
+
+		// On cherche pour chaque bâtiment le premier qui peut recevoir le produit :
+		for (int i = 0; i < nb_bats; i++){
+			String[] liste_prod = liste_bat[i][1].split("_");
+			boolean possible = true;
+			for (int j = 0; j < liste_prod.length ; j++)
+				if (!compatible(prod, liste_prod[j]))
+					possible = false;
+			if (possible)
+				return liste_bat[i][0];
+		}
+
+		// Sinon, on ajoute un nouveau bâtiment :
+		return "Bat_"+prod;
 	}
 
 	public void skip(){}
