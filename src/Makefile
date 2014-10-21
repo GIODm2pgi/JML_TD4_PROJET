@@ -2,8 +2,8 @@ JMLC = jmlc -O -Q
 RM = rm
 JAVA = java
 JAVAC = javac
-JUNIT4 = /usr/share/java/junit4.jar
-JMLRUNTIME = /usr/share/jml/bin/jmlruntime.jar
+JUNIT4 = ../lib/junit4-4.8.2.jar
+JMLRUNTIME = /usr/local/JML/bin/jmlruntime.jar
 JMLCLASSPATH = .:$(JMLRUNTIME)
 JMLJUNITCLASSPATH = $(JMLCLASSPATH):$(JUNIT4)
 
