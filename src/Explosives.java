@@ -108,6 +108,8 @@ public class Explosives {
 	  @			(\exists int i; 0 <= i && i < nb_inc; 
 	  @				incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2) ) ;
       @*/
+	// 1er "ensures" : Si la méthode a retourné 'true' alors il n'y a pas d'entrée de type [prod1][prod2] dans 'incomp'.	
+	// 2ème "ensures" : Si la méthode a retourné 'false' alors il n'y a une entrée de type [prod1][prod2] dans 'incomp'.	
 	public /*@ pure @*/ boolean compatible (String prod1, String prod2){
 		for (int i=0; i < nb_inc; i++)
 			if (incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2))
@@ -117,18 +119,15 @@ public class Explosives {
 
 	/*@ requires (bat.startsWith("Bat")) ;
 	  @ requires (\exists int i; 0 <= i && i < nb_assign; assign[i][0].equals(bat)) ;
-	  @ ensures (\result == true) ==>
-	  @ 		((\forall int i; 0 <= i &&  i < nb_assign;
-      @				(\forall int j; 0 <= j && j < nb_assign;
-      @					(assign[i][0].equals(assign[j][0]) ==>
-      @					(i == j)))));
+      @ ensures (\result == true) ==>
+      @		(\forall int i; 0 <= i &&  i < nb_assign;
+      @			!assign[i][0].equals(bat)) ;
 	  @ ensures (\result == false) ==>
-	  @ (\exists int i,j;
-	  @		0 <= i && i < nb_assign && 0 <= j && j < nb_assign && i != j;
-	  @		assign[i][0].equals(assign[j][0])); 
+	  @ 	(\exists int i; 0 <= i && i < nb_assign;
+	  @			assign[i][0].equals(bat)); 
       @*/
-	// La méthode doit retourner 'true' que si le bâtiment 
-	// Si le résultat est 'false' : 
+	// 1er "ensures" : Si la méthode a retourné 'true' alors le bâtiment n'apparaît pas dans 'assign'.	
+	// 2ème "ensures" : Si la méthode a retourné 'false' alors il y a au moins une entrée avec 'bat' dans 'assign'.	
 	public /*@ pure @*/ boolean nouveau_bat (String bat){
 		int N = 0;
 		for (int i=0; i < nb_assign; i++)
@@ -141,24 +140,48 @@ public class Explosives {
 	/*@ requires (prod.startsWith("Prod")) ;
 	  @ ensures (\result.startsWith("Bat")) ;
 	  @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
-      @				(\forall int j; 0 <= j && j < nb_inc;
-      @					( (assign[i][0].equals(assign[j][0]) ==>
-      @					(compatible(assign[i][1],assign[j][1])) 
-      @				)))) ;
+	  @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
+	  @*/
+	// 2ème "ensures" : Tous les produits du bâtiment donné en réponse sont compatibles avec 'prod'.	
+	public String findBatSimple (String  prod){
+		// On ajoute un nouveau bâtiment :
+		return "Bat_"+prod;
+	}
+
+	// Solution trop simple : mettre chaque produit dans un bâtiment différent.
+	/*@ requires (prod.startsWith("Prod")) ;
+      @ ensures (\result.startsWith("Bat")) ;
+      @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
+      @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
       @ ensures (nouveau_bat(\result)) ==>
       @			(\forall int i; 0 <= i && i < nb_assign;
       @				(\exists int k; 0 <= k && k < nb_assign;
       @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
       @*/
-	// Pour ne pas autoriser la solution simple, on vérifie que si le produit a été
+	// 2ème "ensures" : Tous les produits du bâtiment donné en réponse sont compatibles avec 'prod'.
+	// 3ème "ensures" : Pour ne pas autoriser la solution simple, on vérifie que si le produit a été
 	// ajouté dans un bâtiment vide (nouveau bâtiment), alors le produit ne pouvait pas
 	// être placé dans un autre bâtiment pour cause d'incompatibilité.
+	public String findBatSimpleInterdit (String  prod){
+		// On ajoute un nouveau bâtiment :
+		return "Bat_"+prod;
+	}
+
+	/*@ requires (prod.startsWith("Prod")) ;
+	  @ ensures (\result.startsWith("Bat")) ;
+      @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
+      @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
+      @ ensures (nouveau_bat(\result)) ==>
+      @			(\forall int i; 0 <= i && i < nb_assign;
+      @				(\exists int k; 0 <= k && k < nb_assign;
+      @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
+      @*/
 	public String findBat (String  prod){
 
 		// On stocke la liste des bâtiments :
 		String[] batiments = new String [30];
 		int nb_bats = 0;
-		
+
 		// On stocke la liste des bâtiments qui ne peuvent pas recevoir le produit :
 		String[] batiments_impossibles = new String [30];
 		int nb_bats_imp = 0;
@@ -196,7 +219,7 @@ public class Explosives {
 				}
 			}
 		}
-		
+
 		// On cherche le premier bâtiment qui n'est pas dans la liste des incompatibles :
 		for (int i=0; i < nb_bats; i++){
 			boolean test_comp = true;
@@ -206,7 +229,7 @@ public class Explosives {
 			if (test_comp)
 				return batiments[i];
 		}
-		
+
 		// Sinon, on ajoute un nouveau bâtiment :
 		return "Bat_"+prod;
 	}

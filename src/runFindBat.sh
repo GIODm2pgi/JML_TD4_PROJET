@@ -1,0 +1,1 @@
+make TestExplosivesJUnit4FindBat.run

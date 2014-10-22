@@ -28,6 +28,18 @@ TestExplosivesJUnit4Public.class : Explosives.class TestExplosivesJUnit4Public.j
 TestExplosivesJUnit4Public.run : TestExplosivesJUnit4Public.class
 	 java -cp $(JMLJUNITCLASSPATH) TestExplosivesJUnit4Public
 
+TestExplosivesJUnit4FindBat.class : Explosives.class TestExplosivesJUnit4FindBat.java
+	$(JAVAC) -classpath $(JMLJUNITCLASSPATH)  TestExplosivesJUnit4FindBat.java
+
+TestExplosivesJUnit4FindBat.run : TestExplosivesJUnit4FindBat.class
+	 java -cp $(JMLJUNITCLASSPATH) TestExplosivesJUnit4FindBat
+	 
+TestExplosivesJUnit4FindBatVSFindBatSimple.class : Explosives.class TestExplosivesJUnit4FindBatVSFindBatSimple.java
+	$(JAVAC) -classpath $(JMLJUNITCLASSPATH)  TestExplosivesJUnit4FindBatVSFindBatSimple.java
+
+TestExplosivesJUnit4FindBatVSFindBatSimple.run : TestExplosivesJUnit4FindBatVSFindBatSimple.class
+	 java -cp $(JMLJUNITCLASSPATH) TestExplosivesJUnit4FindBatVSFindBatSimple
+
 eclipseBin :
 	cp *.class ../bin
 
