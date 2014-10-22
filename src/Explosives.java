@@ -1,4 +1,5 @@
 
+
 // Based on a B specification from Marie-Laure Potet.
 
 public class Explosives {
@@ -128,12 +129,12 @@ public class Explosives {
       @*/
 	// La méthode doit retourner 'true' que si le bâtiment 
 	// Si le résultat est 'false' : 
-	public /*@ pure @*/ boolean alone_in_bat (String bat){
+	public /*@ pure @*/ boolean nouveau_bat (String bat){
 		int N = 0;
 		for (int i=0; i < nb_assign; i++)
 			if (assign[i][0].equals(bat))
 				N++;
-		return (N == 1);
+		return (N == 0);
 	}
 
 	// Solution trop simple : mettre chaque produit dans un bâtiment différent.
@@ -144,43 +145,68 @@ public class Explosives {
       @					( (assign[i][0].equals(assign[j][0]) ==>
       @					(compatible(assign[i][1],assign[j][1])) 
       @				)))) ;
-      @ ensures (alone_in_bat(\result)) ==>
+      @ ensures (nouveau_bat(\result)) ==>
       @			(\forall int i; 0 <= i && i < nb_assign;
-      @				(compatible(assign[i][1],prod)) ==> (assign[i][0].equals(\result))); 
+      @				(\exists int k; 0 <= k && k < nb_assign;
+      @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
       @*/
 	// Pour ne pas autoriser la solution simple, on vérifie que si le produit a été
 	// ajouté dans un bâtiment vide (nouveau bâtiment), alors le produit ne pouvait pas
 	// être placé dans un autre bâtiment pour cause d'incompatibilité.
 	public String findBat (String  prod){
-		// On stock dans un tableau la liste des produits pour chaque bâtiment.
-		String[][] liste_bat = new String[30][2];
+
+		// On stocke la liste des bâtiments :
+		String[] batiments = new String [30];
 		int nb_bats = 0;
+		
+		// On stocke la liste des bâtiments qui ne peuvent pas recevoir le produit :
+		String[] batiments_impossibles = new String [30];
+		int nb_bats_imp = 0;
 
-		for (int i=0; i < nb_assign;i++){
-			boolean added = false;
+		// On parcourt le tableau assign pour remplir les listes :
+		for (int i=0; i < nb_assign; i++){
+			String bat_test = assign[i][0];
+			String prod_test = assign[i][1];
+
+			// Test de compatibilité
+			boolean test_comp = true;
+			for (int j=0; j < nb_inc; j++)
+				if (incomp[j][0].equals(prod) && incomp[j][1].equals(prod_test))
+					test_comp = false;
+
+			// Ajout si nécéssaire dans la liste des bâtiments :
+			boolean test_liste_bat = false;
 			for (int j=0; j < nb_bats; j++)
-				if (liste_bat[j][0].equals(assign[i][0])){
-					liste_bat[j][1] += "_" + assign[i][1];
-					added = true;
-				}
-			if (!added){
-				liste_bat[nb_bats][0] = assign[i][0];
-				liste_bat[nb_bats][1] = assign[i][1];
+				if (batiments[j].equals(bat_test))
+					test_liste_bat = true;
+			if (!test_liste_bat){
+				batiments[nb_bats]=bat_test;
 				nb_bats++;
-			}				
-		}
+			}
 
-		// On cherche pour chaque bâtiment le premier qui peut recevoir le produit :
-		for (int i = 0; i < nb_bats; i++){
-			String[] liste_prod = liste_bat[i][1].split("_");
-			boolean possible = true;
-			for (int j = 0; j < liste_prod.length ; j++)
-				if (!compatible(prod, liste_prod[j]))
-					possible = false;
-			if (possible)
-				return liste_bat[i][0];
+			// Ajout si nécéssaire dans la liste des bâtiments incompatibles :
+			if (!test_comp){
+				boolean test_liste_bat_imp = false;
+				for (int j=0; j < nb_bats_imp; j++)
+					if (batiments_impossibles[j].equals(bat_test))
+						test_liste_bat_imp = true;
+				if (!test_liste_bat_imp){
+					batiments_impossibles[nb_bats_imp]=bat_test;
+					nb_bats_imp++;
+				}
+			}
 		}
-
+		
+		// On cherche le premier bâtiment qui n'est pas dans la liste des incompatibles :
+		for (int i=0; i < nb_bats; i++){
+			boolean test_comp = true;
+			for (int j=0; j < nb_bats_imp; j++)
+				if (batiments_impossibles[j].equals(batiments[i]))
+					test_comp = false;
+			if (test_comp)
+				return batiments[i];
+		}
+		
 		// Sinon, on ajoute un nouveau bâtiment :
 		return "Bat_"+prod;
 	}
