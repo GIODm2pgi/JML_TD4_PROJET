@@ -193,6 +193,9 @@ public class TestExplosivesJUnit4 {
 			e.add_incomp("Prod_Jambon","Prod_Fromage");
 			e.add_incomp("Prod_Sel","Prod_Poivre");
 			e.add_incomp("Prod_Moutarde","Prod_Poivre");
+			e.add_incomp("Prod_Vinaigre","Prod_Poivre");
+			e.add_incomp("Prod_Vinaigre","Prod_Huile");
+			e.add_incomp("Prod_Vinaigre","Prod_Fromage");
 			e.add_incomp("Prod_Vinaigre","Prod_Dentifrice");
 			e.add_incomp("Prod_Pain","Prod_Dentifrice");
 			e.add_incomp("Prod_Pain","Prod_Vinaigre");
