@@ -78,6 +78,7 @@ public class TestExplosivesJUnit4FindBatVSFindBatSimple {
 
 			for (int i=0; i < liste_produits.length; i++){
 				String b = e.findBatSimple(liste_produits[i]);
+				System.out.println(liste_produits[i] + " -> " + b);
 				e.add_assign(b,liste_produits[i]);
 			}
 
@@ -125,6 +126,7 @@ public class TestExplosivesJUnit4FindBatVSFindBatSimple {
 
 			for (int i=0; i < liste_produits.length; i++){
 				String b = e.findBatSimpleInterdit(liste_produits[i]);
+				System.out.println(liste_produits[i] + " -> " + b);
 				e.add_assign(b,liste_produits[i]);
 			}
 
@@ -172,6 +174,7 @@ public class TestExplosivesJUnit4FindBatVSFindBatSimple {
 
 			for (int i=0; i < liste_produits.length; i++){
 				String b = e.findBat(liste_produits[i]);
+				System.out.println(liste_produits[i] + " -> " + b);
 				e.add_assign(b,liste_produits[i]);
 			}
 

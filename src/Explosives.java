@@ -70,11 +70,9 @@ public class Explosives {
 	// si le tableau 'assign' contient une entrée [B][P1] et une entrée [B][P2], alors les entrées
 	// [P1][P2] et [P2][P1] ne doivent pas se trouver dans le tableau 'incomp'.
 
-	/*@ requires
-      @ (0 <= nb_inc+2 && nb_inc+2 < 50) &&
-      @ (prod1.startsWith("Prod") && prod2.startsWith("Prod")) &
-      @ (!prod1.equals(prod2))
-      @ ;
+	/*@ requires (0 <= nb_inc+2 && nb_inc+2 < 50) ;
+      @ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod")) ; 
+      @ requires (!prod1.equals(prod2)) ;
       @*/
 	public void add_incomp(String prod1, String prod2){
 		incomp[nb_inc][0] = prod1;
@@ -84,15 +82,13 @@ public class Explosives {
 		nb_inc = nb_inc+2;
 	}
 
-	/*@ requires
-      @ (0 <= nb_assign+1 && nb_assign+2 < 30) &&
-      @ (bat.startsWith("Bat") && prod.startsWith("Prod")) &&
-      @ (\forall int i; 0 <= i &&  i < nb_assign;
-      @		(\forall int j; 0 <= j && j < nb_inc;
-      @			( (assign[i][0].equals(bat) && incomp[j][0].equals(assign[i][1]) ) ==>
-      @			( !incomp[j][1].equals(prod) )
-      @		)))
-      @ ;
+	/*@ requires (0 <= nb_assign+1 && nb_assign+1 < 30) ;
+      @ requires (bat.startsWith("Bat") && prod.startsWith("Prod")) ;
+      @ requires (\forall int i; 0 <= i &&  i < nb_assign;
+      @				(\forall int j; 0 <= j && j < nb_inc;
+      @					( (assign[i][0].equals(bat) && incomp[j][0].equals(assign[i][1]) )
+      @					==> ( !incomp[j][1].equals(prod) )
+      @			))) ;
       @*/
 	public void add_assign(String bat, String prod){
 		assign[nb_assign][0] = bat;
@@ -118,7 +114,6 @@ public class Explosives {
 	}
 
 	/*@ requires (bat.startsWith("Bat")) ;
-	  @ requires (\exists int i; 0 <= i && i < nb_assign; assign[i][0].equals(bat)) ;
       @ ensures (\result == true) ==>
       @		(\forall int i; 0 <= i &&  i < nb_assign;
       @			!assign[i][0].equals(bat)) ;
@@ -128,7 +123,7 @@ public class Explosives {
       @*/
 	// 1er "ensures" : Si la méthode a retourné 'true' alors le bâtiment n'apparaît pas dans 'assign'.	
 	// 2ème "ensures" : Si la méthode a retourné 'false' alors il y a au moins une entrée avec 'bat' dans 'assign'.	
-	public /*@ pure @*/ boolean nouveau_bat (String bat){
+	public /*@ pure @*/ boolean existe_bat (String bat){
 		int N = 0;
 		for (int i=0; i < nb_assign; i++)
 			if (assign[i][0].equals(bat))
@@ -153,7 +148,7 @@ public class Explosives {
       @ ensures (\result.startsWith("Bat")) ;
       @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
       @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
-      @ ensures (nouveau_bat(\result)) ==>
+      @ ensures (existe_bat(\result)) ==>
       @			(\forall int i; 0 <= i && i < nb_assign;
       @				(\exists int k; 0 <= k && k < nb_assign;
       @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
@@ -171,7 +166,7 @@ public class Explosives {
 	  @ ensures (\result.startsWith("Bat")) ;
       @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
       @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
-      @ ensures (nouveau_bat(\result)) ==>
+      @ ensures (existe_bat(\result)) ==>
       @			(\forall int i; 0 <= i && i < nb_assign;
       @				(\exists int k; 0 <= k && k < nb_assign;
       @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
