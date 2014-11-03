@@ -19,7 +19,7 @@
 
 \settowidth{\unitlength}{\CP} % Set the width of the curly brackets to the width of the title
 \textcolor{FireBrick}{\CP} \\[\baselineskip] % Print title
-{\color{Grey}\Large Stockage de produits dangereux} \\ % Tagline or further description
+{\color{Grey}\Large "Stockage de produits dangereux"} \\ % Tagline or further description
 \endgroup}
 
 \definecolor{lg}{rgb}{0.9,0.9,0.9}
@@ -38,7 +38,7 @@
     \begin{center}
     \begin{tabular}{ >{\centering\arraybackslash}m{1.5in} >{\arraybackslash}m{4in} }
 
-    \vspace{5mm} \includegraphics[width=2cm]{logo} & \vspace{9mm} The projet a été réalisé par \textbf{Johan GIRARD} et  \textbf{Pierre ODIN} dans le cadre du cours de JML du M2PGI. Les tests ont été réalisés sous l'environnement Linux des machines de l'UFR IM²AG.
+    \vspace{5mm} \includegraphics[width=2cm]{logo} & \vspace{9mm} Ce projet a été réalisé par \textbf{Johan GIRARD} et  \textbf{Pierre ODIN} dans le cadre du cours de JML du Master 2 Pro. GI. Les tests ont été réalisés sous l'environnement Linux des machines de l'UFR IM²AG.
 
   \end{tabular}
 
@@ -58,23 +58,23 @@
 
 \subsection{Invariant \no1}
 
-\paragraph{Description de l'invariant :} Il doit y avoir au maximum 50 incompatibilités renseignées dans le tableau \texttt{incomp}. La variable \texttt{nb\_inc} doit être positif et doit être inférieur à 50 car ce nombre est utilisé pour gérer les indices du tableau \texttt{incomp}, il doit donc être situé entre l'indice minimum (0) et l'indice maximum (49).
+\paragraph{Description de l'invariant :} Il doit y avoir au maximum 50 incompatibilités renseignées dans le tableau \texttt{incomp}. La valeur de la variable \texttt{nb\_inc} doit être positive et doit être inférieur à 50 car ce nombre est utilisé pour gérer les indices du tableau \texttt{incomp}, il doit donc être situé entre l'indice minimum (0) et l'indice maximum (49).
 
 \vspace{-0.2cm}
 \paragraph{Test invalidant l'invariant :} Il s'agit de \texttt{testFailInvariant1()} dans \texttt{TestExplosivesJUnit4.java}.
 
 \vspace{-0.2cm}
-\paragraph{Description du test :} Le test fait beaucoup d'appels à \texttt{add\_incomp(...)} et \texttt{nb\_inc} devient supérieur à 49.  
+\paragraph{Description du test :} Le test fait trop d'appels à \texttt{add\_incomp(...)} et \texttt{nb\_inc} devient supérieur à 49.  
 
 \subsection{Invariant \no2}
 
-\paragraph{Description de l'invariant :} Il doit y avoir au maximum 30 affectations renseignées dans le tableau \texttt{assign}. La variable \texttt{nb\_assign} doit être positif et doit être inférieur à 30 car ce nombre est utilisé pour gérer les indices du tableau \texttt{assign}, il doit donc être situé entre l'indice minimum (0) et l'indice maximum (29). Cet invariant indique également qu'il peut y avoir au maximum 30 bâtiments différents.
+\paragraph{Description de l'invariant :} Il doit y avoir au maximum 30 affectations renseignées dans le tableau \texttt{assign}. La valeur de la variable \texttt{nb\_assign} doit être positive et doit être inférieur à 30 car ce nombre est utilisé pour gérer les indices du tableau \texttt{assign}, il doit donc être situé entre l'indice minimum (0) et l'indice maximum (29). Cet invariant indique également qu'il peut y avoir au maximum 30 bâtiments différents répertoriés dans \texttt{assign}.
 
 \vspace{-0.2cm}
 \paragraph{Test invalidant l'invariant :} Il s'agit de \texttt{testFailInvariant2()} dans \texttt{TestExplosivesJUnit4.java}.
 
 \vspace{-0.2cm}
-\paragraph{Description du test :} Le test fait beaucoup d'appels à \texttt{add\_assign(...)} et \texttt{nb\_assign} devient supérieur à 29. 
+\paragraph{Description du test :} Le test fait trop d'appels à \texttt{add\_assign(...)} et \texttt{nb\_assign} devient supérieur à 29. 
 
 \subsection{Invariant \no3}
 
@@ -88,13 +88,13 @@
 
 \subsection{Invariant \no4}
 
-\paragraph{Description de l'invariant :} Tous les bâtiments doivent être référencés par un nom ayant pour préfixe \texttt{"Bat"} et tous les produits doivent être référencés un nom ayant pour préfixe \texttt{"Prod"} dans la liste des affectations. Cela signifie que toutes les valeurs définies dans le tableau \texttt{assign[0]} doivent commencer par \texttt{"Bat"} et toutes les valeurs définies dans le tableau \texttt{assign[1]} doivent commencer par \texttt{"Prod"}.
+\paragraph{Description de l'invariant :} Tous les bâtiments doivent être référencés par un nom ayant pour préfixe \texttt{"Bat"} et tous les produits doivent être référencés par un nom ayant pour préfixe \texttt{"Prod"} dans la liste des affectations. Cela signifie que toutes les valeurs définies dans le tableau \texttt{assign} doivent commencer par \texttt{"Bat"} pour le premier élément et par \texttt{"Prod"} sur le second.
 
 \vspace{-0.2cm}
 \paragraph{Test invalidant l'invariant :} Il s'agit de \texttt{testFailInvariant4()} dans \texttt{TestExplosivesJUnit4.java}.
 
 \vspace{-0.2cm}
-\paragraph{Description du test :} Le test fait un ajout d'une assignation dont le nom du bâtiment ne commence pas par \texttt{"Bat"} et le nom du produit ne commence pas par \texttt{"Prod"} (une seule de ces deux irrégularités serait suffiante pour invalider l'invariant).
+\paragraph{Description du test :} Le test fait un ajout d'une assignation dont le nom du bâtiment ne commence pas par \texttt{"Bat"} et le nom du produit ne commence pas par \texttt{"Prod"} (une seule de ces deux irrégularités serait suffisante pour invalider l'invariant).
 
 \subsection{Invariant \no5}
 
@@ -114,24 +114,25 @@
 \paragraph{Test invalidant l'invariant :} Il s'agit de \texttt{testFailInvariant6()} dans \texttt{TestExplosivesJUnit4Public.java}.
 
 \vspace{-0.2cm}
-\paragraph{Description du test :} La fonction \texttt{add\_incomp(...)} ajoutent deux entrées dans le tableau \texttt{incomp} (\texttt{[X][Y]} et \texttt{[Y][X]}) à chaque appel. Il n'est donc pas possible d'invalider cette propriété en utilisant uniquement les méthodes de la classe. Le test modifie donc un attribut publique de la classe pour invalider l'invariant : une incompatibilité est ajoutée, puis la deuxième entrée du tableau est retirée et enfin un appel à \texttt{skip()} est fait.
+\paragraph{Description du test :} La fonction \texttt{add\_incomp(...)} ajoutent deux entrées dans le tableau \texttt{incomp} (\texttt{[X][Y]} et \texttt{[Y][X]}) à chaque appel. Il n'est donc pas possible d'invalider cette propriété en utilisant uniquement les méthodes de la classe. Le test modifie donc un attribut public de la classe pour invalider l'invariant : une incompatibilité est ajoutée, puis la deuxième entrée du tableau est retirée et enfin un appel à \texttt{skip()} est fait.
 
 \subsection{Invariant \no7}
 
-\paragraph{Description de l'invariant :} Deux produits dans le même bâtiment ne doivent pas être incompatibles. Cela signifique que si le tableau \texttt{assign} contient une entrée \texttt{[B][P1]} et une entrée \texttt{[B][P2]}, alors les entrées \texttt{[P1][P2]} et \texttt{[P2][P1]} ne doivent pas se trouver dans le tableau \texttt{incomp}.
+\paragraph{Description de l'invariant :} Deux produits assignés au même bâtiment ne doivent pas être incompatibles. Cela signifie que si le tableau \texttt{assign} contient une entrée \texttt{[B][P1]} et une entrée \texttt{[B][P2]}, alors les entrées \texttt{[P1][P2]} et \texttt{[P2][P1]} ne doivent pas se trouver dans le tableau \texttt{incomp}.
 
 \vspace{-0.2cm}
 \paragraph{Test invalidant l'invariant :} Il s'agit de \texttt{testFailInvariant7()} dans \texttt{TestExplosivesJUnit4.java}.
 
 \vspace{-0.2cm}
-\paragraph{Description du test :} Le test ajoute des incompatibilités entre des produits puis il ajoute deux assignations dans le même bâtiement de deux produits déclarés incompatibles.
+\paragraph{Description du test :} Le test ajoute des incompatibilités entre des produits, puis il ajoute deux assignations dans le même bâtiment de deux produits déclarés incompatibles.
 
 \newpage
 
-\section{Calcul des préconditions}
+\section{Calcul de préconditions}
 
 \subsection{Méthode add\_incomp(...)}
 
+\noindent
 La précondition réalisée pour la méthode \texttt{add\_incomp(...)} est la suivante :
 \vspace{0.3cm}
 
@@ -161,6 +162,7 @@ En ajoutant cette précondition, les tests suivants deviennent inconclusifs :
 
 \subsection{Méthode add\_assign(...)}
 
+\noindent
 La précondition réalisée pour la méthode \texttt{add\_assign(...)} est la suivante :
 \vspace{0.3cm}
 
@@ -169,10 +171,10 @@ La précondition réalisée pour la méthode \texttt{add\_assign(...)} est la su
     /*@ requires (0 <= nb_assign+1 && nb_assign+1 < 30) ;
       @ requires (bat.startsWith("Bat") && prod.startsWith("Prod")) ;
       @ requires (\forall int i; 0 <= i &&  i < nb_assign;
-      @	             (\forall int j; 0 <= j && j < nb_inc;
-      @	                 ( (assign[i][0].equals(bat)
-      @                    && incomp[j][0].equals(assign[i][1]) )
-      @	                 ==> ( !incomp[j][1].equals(prod) ) ))) ;
+      @	            (\forall int j; 0 <= j && j < nb_inc;
+      @	               ( (assign[i][0].equals(bat) && incomp[j][0].equals(assign[i][1]))
+      @	               ==> ( !incomp[j][1].equals(prod) )
+      @          ))) ;
       @*/
 \end{verbatim}
 \vspace{0.2cm}
@@ -181,8 +183,8 @@ La précondition réalisée pour la méthode \texttt{add\_assign(...)} est la su
 Cette précondition vérifie trois éléments :
 \begin{itemize}
 \item La valeur de \texttt{nb\_assign} en entrée puis modifiée (ajout de 1 comme dans l'implémentation de la méthode) est comprise en 0 et 29.
-\item Le premier argument de la méthode est préfixé par \texttt{"Bat"} et le second par par \texttt{"Prod"}.
-\item Il n'y a pas de produits incompatibles avec le produit passé en argument dans le bâtiment passé en arguement. Cela se traduit par une précondition qui vérifie que s'il existe un produit incompatible avec un produit du bâtiment passé en argument, alors ce produit n'est pas celui passé en argument.
+\item Le premier argument de la méthode est préfixé par \texttt{"Bat"} et le second par \texttt{"Prod"}.
+\item Il n'y a pas de produits incompatibles avec le produit passé en argument dans le bâtiment passé en argument. Cela se traduit par une précondition qui vérifie que s'il existe un produit incompatible avec un produit du bâtiment passé en argument, alors ce produit n'est pas celui passé en argument.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -195,7 +197,7 @@ En ajoutant cette précondition, les tests suivants deviennent inconclusifs :
 
 \section{Recherche d'un bâtiment}
 
-\paragraph{Précision sur l'énoncé :} La méthode \texttt{findBat(...)} retourne un nouveau nom de bâtiment dans le cas où aucun bâtiment référencés dans le tableau \texttt{assign} ne peut recevoir le nouveau produit. La solution \textit{"trop simple"} qui consiste à retourner un nouveau bâtiment à chaque appel n'est donc pas autorisée avec cet énoncé. Cependant, nous fournissons tout de même des méthodes et un fichier de test permettant de mettre en évidence les différences entre la solution \textit{"trop simple"} et notre solution pour \texttt{findBat(...)}.
+\paragraph{Précision sur l'énoncé :} La méthode \texttt{findBat(...)} retourne un nouveau nom de bâtiment dans le cas où aucun des bâtiments référencés dans le tableau \texttt{assign} ne peut recevoir le nouveau produit. La solution \textit{"trop simple"} qui consiste à retourner un nouveau bâtiment à chaque appel n'est donc pas autorisée avec cet énoncé. Cependant, nous fournissons tout de même des méthodes et un fichier de test permettant de mettre en évidence les différences entre la solution \textit{"trop simple"} et notre solution pour \texttt{findBat(...)}.
 
 \subsection{Méthode compatible(...) et existe\_bat(...)}
 
@@ -209,11 +211,12 @@ En ajoutant cette précondition, les tests suivants deviennent inconclusifs :
       @	    (\exists int i; 0 <= i && i < nb_inc; 
       @	        incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2) ) ;
       @*/
+    public /*@ pure @*/ boolean compatible (String prod1, String prod2){ ... }
 \end{verbatim}
 \vspace{0.2cm}
 
 \noindent
-La méthode \texttt{compatible(...)} teste si deux produits sont déclarés comme compatibles. Sa spécification vérifie d'une part que les arguments sont valides et d'autre part que la méthode retourne \texttt{true} que si les produits sont compatibles et \texttt{false} que s'il ne le sont pas.
+La méthode \texttt{compatible(...)} teste si deux produits sont déclarés comme compatibles. Sa spécification vérifie d'une part que les arguments sont valides et d'autre part que la méthode retourne \texttt{true} que si les produits sont compatibles et \texttt{false} que s'ils ne le sont pas.
 
 \vspace{0.3cm}
 \noindent
@@ -226,6 +229,7 @@ La méthode \texttt{compatible(...)} teste si deux produits sont déclarés comm
       @     (\exists int i; 0 <= i && i < nb_assign;
       @	        assign[i][0].equals(bat)); 
       @*/
+    public /*@ pure @*/ boolean existe_bat (String bat){ ... }
 \end{verbatim}
 \vspace{0.2cm}
 
@@ -242,34 +246,34 @@ La méthode \texttt{existe\_bat(...)} teste si un bâtiment stocke au moins un p
       @	    (assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
       @ ensures (existe_bat(\result)) ==>
       @	    (\forall int i; 0 <= i && i < nb_assign;
-      @	        (\exists int k; 0 <= k && k < nb_assign;
-      @	            (assign[i][0].equals(assign[k][0])
-      @             && !compatible(assign[k][1],prod))));
+      @	      (\exists int k; 0 <= k && k < nb_assign;
+      @	        (assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
       @*/
 \end{verbatim}
 \vspace{0.2cm}
 
 \noindent
-Cette spécification vérifie éléments suivant :
+Cette spécification vérifie les éléments suivants :
 \begin{itemize}
-\item L'argument et le résultat sont syntaxiquement valide.
+\item L'argument et le résultat sont syntaxiquement valides.
 \item Le produit est stocké dans un bâtiment où il est compatible avec tous les autres produits stockés dans ce bâtiment.
 \item Si le bâtiment retourné ne stockait aucun produit avant l'appel à \texttt{findBat(...)}, alors cela signifie que le produit ne peut être stocké dans aucun des bâtiments déclarés dans \texttt{assign}. Cette post-condition est utilisé pour interdire la solution \textit{"trop simple"}.
 \end{itemize}
 
 \newpage
 
+\noindent
 Le principe de la méthode \texttt{findBat(...)} est le suivant :
 
 \vspace{0.2cm}
 \noindent
 \begin{verbatim}
     public String findBat (String  prod){
-        // On crée une liste de bâtiments (L1)
+        // On crée une liste de tous les bâtiments (L1)
         // On crée une liste de bâtiments qui ne peuvent pas recevoir le produit (L2)
-        // On parcourt le tableau 'assign' pour remplir ces deux listes
+        // On parcourt le tableau "assign" pour remplir ces deux listes
                 // On test la compatibilité
-                // Si le bâtiment n'est pas dans (L1), on l'ajoute
+                // Si le bâtiment n'est pas dans (L1), on l'ajoute dans (L1)
                 // Si le bâtiment contient un produit incompatible, on l'ajoute dans (L2)
         // On cherche le premier bâtiment de (L1) qui n'est pas dans (L2)
         // S'il n'y en a pas, on retourne un nouveau bâtiment
@@ -277,13 +281,15 @@ Le principe de la méthode \texttt{findBat(...)} est le suivant :
 \end{verbatim}
 \vspace{0.2cm}
 
-La méthode est testé dans le fichier \texttt{TestExplosivesJUnit4FindBat.java}. Le test le plus intéréssant est \texttt{testFindBat7()}. Il constitue une liste de 17 produits, il crée ensuite plusieurs incompatibilités entre certains de ces produits et enfin il cherche un bâtiment pour chaque produit. La trace des assignations permet de vérifier que les incompatibilités ne sont pas violées.
+\noindent
+La méthode est testée dans le fichier \texttt{TestExplosivesJUnit4FindBat.java}. Le test le plus intéressant est implémenté dans le fichier \texttt{testFindBat7()}. Il constitue une liste de 17 produits, il crée ensuite plusieurs incompatibilités entre certains de ces produits et enfin il cherche un bâtiment pour chaque produit. La trace des assignations permet de vérifier que les incompatibilités ne sont pas violées.
 
-\paragraph{\danger} L'implémentation de \texttt{findBat(...)} retourne le premier bâtiment qui peut stocké le produit. La répartition proposée après un test de ce type est donc valide mais pas forcément optimale (cela dépend de l'ordre d'insertion dans le tableau \texttt{assign}). Une amélioration possible pourrait être de ré-organiser les assignations dans \texttt{findBat(...)} pour toujours assurer que la répartition utilise le moins de bâtiments possibles.
+\paragraph{\danger} L'implémentation de \texttt{findBat(...)} retourne le premier bâtiment qui peut stocker le produit. La répartition proposée après un test de ce type est donc valide mais elle n'est pas forcément optimale (cela dépend de l'ordre d'insertion dans le tableau \texttt{assign}). Une amélioration possible pourrait être de ré-organiser les assignations dans \texttt{findBat(...)} pour toujours assurer que la répartition utilise le moins de bâtiments possibles.
 
 
 \subsection{Comparaison des méthodes findBatSimple(...), findBatSimpleInterdit(...) et findBat(...)}
 
+\noindent
 Le fichier de \texttt{TestExplosivesJUnit4FindBatVSFindBatSimple.java} permet de mettre en évidence le rôle de la post-condition que nous avons ajoutée pour éviter la solution \textit{"trop simple"}. Le test réalisé est celui décrit dans la section précédente avec à chaque fois une méthode différente. Le tableau suivant résume cette comparaison :
 
 \begin{table}[h]
