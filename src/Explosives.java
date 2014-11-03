@@ -12,41 +12,24 @@ public class Explosives {
 	/*@ public invariant // Prop 1
       @ (0 <= nb_inc && nb_inc < 50);
       @*/
-	// Il doit y avoir au maximum 50 incompatibilités renseignées dans le tableau 'incomp'.
-	// La variable 'nb_inc' doit être positif et doit être inférieur à 50 car
-	// ce nombre est utilisé pour gérer les indices du tableau 'incomp', il doit donc
-	// être situé entre l'indice minimum (0) et l'indice maximum (49).
 
 	/*@ public invariant // Prop 2
       @ (0 <= nb_assign && nb_assign < 30);
       @*/
-	// Il doit y avoir au maximum 30 affectations renseignées dans le tableau 'assign'.
-	// La variable 'nb_assign' doit être positif et doit être inférieur à 30 car
-	// ce nombre est utilisé pour gérer les indices du tableau 'assign', il doit donc
-	// être situé entre l'indice minimum (0) et l'indice maximum (29).
 
 	/*@ public invariant // Prop 3
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @         incomp[i][0].startsWith("Prod") && incomp[i][1].startsWith("Prod"));
       @*/
-	// Tous les produits doivent être référencés par "ProdXXXXXXX" dans la liste des
-	// incompatibilités. Cela signifie que toutes les valeurs définies dans le tableau
-	// 'incomp' doivent commencer par "Prod".
 
 	/*@ public invariant // Prop 4
       @ (\forall int i; 0 <= i && i < nb_assign; 
       @         assign[i][0].startsWith("Bat") && assign[i][1].startsWith("Prod"));
       @*/
-	// Tous les bâtiments doivent être référencés par "BatXXXXXXX" et tous les produits
-	// doivent être référencés par "ProdXXXXXXX" dans la liste des affectations. Cela signifie
-	// que toutes les valeurs définies dans le tableau 'assign'[0] doivent commencer par "Bat"
-	// et toutes les valeurs définies dans le tableau 'assign'[1] doivent commencer par "Prod".
 
 	/*@ public invariant // Prop 5
       @ (\forall int i; 0 <= i && i < nb_inc; !(incomp[i][0]).equals(incomp[i][1]));
       @*/
-	// Un produit ne doit pas être incompatible avec lui-même. Cela signifie que le tableau
-	// 'incomp' ne doit pas avoir une ligne avec deux fois le même produit.
 
 	/*@ public invariant // Prop 6
       @ (\forall int i; 0 <= i && i < nb_inc; 
@@ -54,9 +37,6 @@ public class Explosives {
       @           (incomp[i][0]).equals(incomp[j][1]) 
       @              && (incomp[j][0]).equals(incomp[i][1]))); 
       @*/
-	// Si un produit X est incompatible avec un produit Y, alors le produit Y est incompatible
-	// avec le produit X. Cela signifie que le tableau 'incomp' doit contenir 2 entrées pour
-	// chaque incompatibilité : la première de la forme [X][Y] et l'autre de la forme [Y][X].
 
 	/*@ public invariant // Prop 7
       @ (\forall int i; 0 <= i &&  i < nb_assign; 
@@ -66,9 +46,7 @@ public class Explosives {
       @           (!(assign[i][1]).equals(incomp[k][0])) 
       @              || (!(assign[j][1]).equals(incomp[k][1])))));
       @*/
-	// Deux produits dans le même bâtiment ne doivent pas être incompatibles. Cela signifique que
-	// si le tableau 'assign' contient une entrée [B][P1] et une entrée [B][P2], alors les entrées
-	// [P1][P2] et [P2][P1] ne doivent pas se trouver dans le tableau 'incomp'.
+
 
 	/*@ requires (0 <= nb_inc+2 && nb_inc+2 < 50) ;
       @ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod")) ; 
@@ -104,8 +82,6 @@ public class Explosives {
 	  @			(\exists int i; 0 <= i && i < nb_inc; 
 	  @				incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2) ) ;
       @*/
-	// 1er "ensures" : Si la méthode a retourné 'true' alors il n'y a pas d'entrée de type [prod1][prod2] dans 'incomp'.	
-	// 2ème "ensures" : Si la méthode a retourné 'false' alors il n'y a une entrée de type [prod1][prod2] dans 'incomp'.	
 	public /*@ pure @*/ boolean compatible (String prod1, String prod2){
 		for (int i=0; i < nb_inc; i++)
 			if (incomp[i][0].equals(prod1) && incomp[i][1].equals(prod2))
@@ -121,8 +97,6 @@ public class Explosives {
 	  @ 	(\exists int i; 0 <= i && i < nb_assign;
 	  @			assign[i][0].equals(bat)); 
       @*/
-	// 1er "ensures" : Si la méthode a retourné 'true' alors le bâtiment n'apparaît pas dans 'assign'.	
-	// 2ème "ensures" : Si la méthode a retourné 'false' alors il y a au moins une entrée avec 'bat' dans 'assign'.	
 	public /*@ pure @*/ boolean existe_bat (String bat){
 		int N = 0;
 		for (int i=0; i < nb_assign; i++)
@@ -137,13 +111,12 @@ public class Explosives {
 	  @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
 	  @				(assign[i][0].equals(\result)) ==> (compatible(assign[i][1],prod)) );
 	  @*/
-	// 2ème "ensures" : Tous les produits du bâtiment donné en réponse sont compatibles avec 'prod'.	
 	public String findBatSimple (String  prod){
 		// On ajoute un nouveau bâtiment :
 		return "Bat_"+prod;
 	}
 
-	// Solution trop simple : mettre chaque produit dans un bâtiment différent.
+	// Solution trop simple interdit :
 	/*@ requires (prod.startsWith("Prod")) ;
       @ ensures (\result.startsWith("Bat")) ;
       @ ensures (\forall int i; 0 <= i &&  i < nb_assign;
@@ -153,8 +126,7 @@ public class Explosives {
       @				(\exists int k; 0 <= k && k < nb_assign;
       @						(assign[i][0].equals(assign[k][0]) && !compatible(assign[k][1],prod))));
       @*/
-	// 2ème "ensures" : Tous les produits du bâtiment donné en réponse sont compatibles avec 'prod'.
-	// 3ème "ensures" : Pour ne pas autoriser la solution simple, on vérifie que si le produit a été
+	// Pour ne pas autoriser la solution trop simple, on vérifie que si le produit a été
 	// ajouté dans un bâtiment vide (nouveau bâtiment), alors le produit ne pouvait pas
 	// être placé dans un autre bâtiment pour cause d'incompatibilité.
 	public String findBatSimpleInterdit (String  prod){
@@ -173,7 +145,7 @@ public class Explosives {
       @*/
 	public String findBat (String  prod){
 
-		// On stocke la liste des bâtiments :
+		// On stocke la liste de tous les bâtiments :
 		String[] batiments = new String [30];
 		int nb_bats = 0;
 

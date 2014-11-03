@@ -148,9 +148,9 @@ public class TestExplosivesJUnit4FindBat {
 			e.add_incomp("Prod_Vinaigre","Prod_Dentifrice");
 			e.add_incomp("Prod_Pain","Prod_Dentifrice");
 			e.add_incomp("Prod_Pain","Prod_Vinaigre");
-			
+
 			System.out.println("=================================");
-			
+
 			for (int i=0; i < liste_produits.length; i++){
 				String b = e.findBat(liste_produits[i]);
 				System.out.println(liste_produits[i] + " -> " + b);
